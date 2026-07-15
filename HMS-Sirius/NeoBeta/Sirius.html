@@ -1,0 +1,122 @@
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Theseus</title>
+        <link rel="stylesheet" href="./Asset/css/sirius.css">
+        <style>
+            .top-nav {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 12px 16px;
+                border-bottom: 1px solid #ddd;
+                background: #fff;
+                position: sticky;
+                top: 0;
+                z-index: 100;
+            }
+
+            .nav-title {
+                font-weight: 600;
+                font-size: 16px;
+            }
+
+            .nav-links {
+                display: none; /* default closed */
+                gap: 16px;
+            }
+
+            .nav-links a {
+                text-decoration: none;
+                color: #333;
+                font-size: 14px;
+            }
+
+            .nav-links a:hover {
+                text-decoration: underline;
+            }
+
+            .nav-toggle {
+                background: none;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+    </head>
+ <body>
+    <header class="top-nav">
+        <div class="nav-title">Theseus</div>
+
+        <nav class="nav-links">
+            <a href="#">Home</a>
+            <a href="Observer-0.html">Observer</a>
+            <a href="/">Saule</a>
+            <a href="javascript:void(0)" onclick="goToAbout()">About</a>
+        </nav>
+
+        <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+    </header>
+
+        <div class="content-wrap">
+            <iframe 
+                src="http://oort678.my.id/" 
+                width="800" 
+                height="400">
+            </iframe>
+
+            <div class="viewer-container">
+                <img id="viewer" alt="viewer" height="400" width="200">
+                        <div class="controls">
+                            <button onclick="prev()">⏮ Sebelumnya</button>
+                            <button onclick="next()">⏭ Selanjutnya</button>
+                            <button onclick="random()">🎲 Acak</button>
+                        </div>
+
+            </div>
+        </div>
+
+        <div class="audio-container">
+                <audio id="audio-player" autoplay controls>
+                    <source id="audio-source" src="" type="audio/mpeg">
+                    <source id="audio-source" src="" type="audio/ogg">
+                    Browser Anda tidak mendukung elemen audio.
+                </audio>
+
+                
+        </div>
+        <section id="about" style="margin-top: 80px;">
+            <h2>About</h2>
+            <p id="Desc">
+            </p>
+            <strong>Theseus</strong>
+            <p>Sebuah paradox dimana suatu kapal secara wujud sudah bukan kapal yang sama meski terus diperbaiki</p>
+        </section>
+
+        <script src="/Asset/js/audio.js"></script>
+        <script src="/Asset/js/picture.js"></script>
+        <script>
+            function toggleMenu() {
+                document
+                    .querySelector(".nav-links")
+                    .classList.toggle("active");
+            }
+            function goToAbout() {
+                    document.getElementById("about").scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                }
+
+        </script>
+    </body>
+</html>
