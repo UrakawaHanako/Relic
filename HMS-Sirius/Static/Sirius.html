@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Container utama */
+        .content-wrap {
+            display: flex;
+            align-items: flex-start; /* sejajarkan dari atas */
+            gap: 20px; /* jarak antara iframe dan gambar */
+            margin-top: 20px;
+        }
+
+        iframe {
+            border: 1px solid black;
+        }
+
+        img {
+            max-width: 300px;   /* batas lebar gambar */
+            max-height: 400px;  /* batas tinggi gambar */
+            width: auto;        /* tetap proporsional */
+            height: auto;       /* tetap proporsional */
+            object-fit: contain; /* scale tanpa terpotong */
+            border-radius: 10px;
+        }
+        .audio-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: #fafafa;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .audio-container .controls {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .audio-container button {
+            padding: 8px 12px;
+            border-radius: 6px;
+            background: #444;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+
+        .audio-container button:hover {
+            background: #666;
+        }
+
+    </style>
+</head>
+<body>
+    <p>Proyek sejauh ini adalah implementasi ke bidang Psikologi dengan pendekatan Ekonomi</p>
+    <br><br>
+    <h3>Kwitansi Mental</h3>
+    <p>Untuk mengurangi beban sesaat, dan mengubah beban emosi subjektif qualitative menjadi quantitative</p>
+    
+    <div class="content-wrap">
+        <iframe 
+            src="https://openparliament.id/daftar-anggota-dpr/" 
+            width="800" 
+            height="400">
+        </iframe>
+
+        <img src="Herta/134334847_p0_master1200.jpg">
+        
+
+    </div>
+    <div class="audio-container">
+            <audio id="audio-player" controls>
+                <source id="audio-source" src="" type="audio/mpeg">
+                <source id="audio-source" src="" type="audio/ogg">
+                Browser Anda tidak mendukung elemen audio.
+            </audio>
+
+            <div class="controls">
+                <button onclick="prevAudio()">⏮ Audio Sebelumnya</button>
+                <button onclick="nextAudio()">⏭ Audio Selanjutnya</button>
+                <button onclick="randomAudio()">🎲 Audio Acak</button>
+            </div>
+    </div>
+    <script src="audio.js"></script>
+</body>
+</html>
