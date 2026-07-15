@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theseus</title>
+    <link rel="stylesheet" href="./Asset/css/rigel.css">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <header class="top-nav">
+        <div class="nav-title">Theseus</div>
+
+        <nav class="nav-links">
+            <a href="Sirius.html">Home</a>
+            <a href="Observer-0.html">Observer</a>
+            <a href="Rigel.html">Rigel</a>
+            <a href="/">Saule</a>
+            <a href="javascript:void(0)" onclick="goToAbout()">About</a>
+        </nav>
+
+        <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+    </header>
+
+    <div class="content-wrap">
+        <!-- fill in later -->
+        <iframe
+            src=""
+            width="800"
+            height="400">
+        </iframe>
+
+        <div class="viewer-container">
+            <img id="viewer" alt="viewer" height="400" width="200">
+            <div class="controls">
+                <button onclick="prev()">⏮ Sebelumnya</button>
+                <button onclick="next()">⏭ Selanjutnya</button>
+                <button onclick="random()">🎲 Acak</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="audio-container">
+        <audio id="audio-player" autoplay controls>
+            <source id="audio-source" src="" type="audio/mpeg">
+            <source id="audio-source" src="" type="audio/ogg">
+            Browser Anda tidak mendukung elemen audio.
+        </audio>
+    </div>
+
+    <section id="about" style="margin-top: 80px;">
+        <h2>About</h2>
+        <p id="Desc">
+            <!-- fill in later -->
+        </p>
+        <strong>Theseus</strong>
+        <p>Sebuah paradox dimana suatu kapal secara wujud sudah bukan kapal yang sama meski terus diperbaiki</p>
+    </section>
+
+    <script>
+        // Page-specific data — fill in later.
+        const iframe = [
+
+        ];
+        const audioResource = [
+            // "/REAP/4_Ponder/Neo Beta/Asset/Audio/YourTrack.ogg",
+            "https://azurlane.netojuu.com/images/b/bc/Roon_SelfIntroJP.ogg",
+            ""
+        ];
+        const images = [
+            // "/REAP/4_Ponder/Neo Beta/Asset/yourimage.jpg"
+            "https://safebooru.org//images/3909/e4a958e8d06d4bca76c5e66c2d2c613f1c867dd3.jpg",
+            "https://safebooru.org//images/63/73d11225c5710f41cc828654efdd0f5eb966473d.jpg"    
+        ];
+    </script>
+    <script src="./Asset/js/audio.js"></script>
+    <script src="./Asset/js/picture.js"></script>
+    <script src="./Asset/js/iframe.js"></script>
+    <script>
+        function toggleMenu() {
+            document
+                .querySelector(".nav-links")
+                .classList.toggle("active");
+        }
+        function goToAbout() {
+            document.getElementById("about").scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    </script>
+</body>
+</html>
