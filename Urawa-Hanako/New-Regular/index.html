@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Viewer</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+    }
+
+    h1 {
+      margin: 10px;
+      font-size: 1.4rem;
+    }
+
+    .viewer-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
+      width: 100%;
+      max-width: 1000px;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    img#viewer {
+      flex: 1;
+      max-width: 100%;
+      max-height: 80vh;
+      object-fit: contain;
+      border: 2px solid #444;
+      border-radius: 12px;
+      background: #000;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-left: 10px;
+    }
+
+    button {
+      padding: 12px 18px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      background: #444;
+      color: #fff;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    button:hover {
+      background: #666;
+    }
+
+    /* Responsif untuk HP */
+    @media (max-width: 700px) {
+      .viewer-container {
+        flex-direction: column;
+      }
+      .controls {
+        flex-direction: row;
+        margin-left: 0;
+        margin-top: 10px;
+      }
+      img#viewer {
+        max-height: 60vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Image Viewer</h1>
+  
+  <div class="viewer-container">
+    <img id="viewer" alt="viewer" />
+    <div class="controls">
+      <button onclick="prevImage()">⏮ Sebelumnya</button>
+      <button onclick="nextImage()">⏭ Selanjutnya</button>
+      <button onclick="randomImage()">🎲 Acak</button>
+    </div>
+  </div>
+  <a href="Gallery.html">Video</a>
+  <a href="Kama3.html">Album</a>
+  <script src="js/image_viewer.js"></script>
+
+<script>
+// index.html
+document.getElementById("viewer").addEventListener("click", () => {
+  localStorage.setItem("currentIndex", currentIndex);
+  window.location.href = "Rosmons.html";
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Catalog</title>
+    <link rel="stylesheet" href="fontawesome/css/all.min.css"> <!-- https://fontawesome.com/ -->
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet">
+    <!-- https://fonts.google.com/ -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/templatemo-video-catalog.css">
+	<style>
+		/* Related cards styling */
+		.related-card {
+		border-radius: 12px;
+		overflow: hidden;
+		background: #fff;
+		box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+		transition: transform 0.15s ease, box-shadow 0.2s ease;
+		margin-bottom: 20px;
+		}
+		.related-card:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+		}
+		.related-thumb {
+		height: 160px;
+		width: 100%;
+		object-fit: cover;
+		display: block;
+		}
+		.overlay-play {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		font-size: 32px;
+		color: rgba(255,255,255,0.95);
+		opacity: 0;
+		transition: 0.18s ease;
+		pointer-events: none;
+		text-shadow: 0 2px 6px rgba(0,0,0,0.45);
+		}
+		.related-card:hover .overlay-play { opacity: 1; pointer-events: auto; }
+		.related-meta { padding: 8px 10px; }
+		.related-title { font-size: 14px; margin: 0; text-align: center; word-break: break-word; }
+		.tm-catalog-item-list .col-lg-4 { display: flex; flex-direction: column; }
+		</style>
+
+</head>
+<!--
+
+TemplateMo 552 Video Catalog
+
+https://templatemo.com/tm-552-video-catalog
+
+-->
+<body>
+	<div class="tm-page-wrap mx-auto">
+		<!-- Page content -->
+		<div class="container-fluid">
+			<div class="mx-auto tm-content-container">
+				<main>
+					<div class="row mb-5 pb-4">
+						<div class="col-12">
+							<!-- Video player 1422x800 -->
+							<video id="video-player" width="1422" height="800" controls autoplay style="object-fit: cover;">
+								<source id="video-source" src="" type="video/mp4">
+								Your browser does not support the video tag.
+							</video>
+
+							<div class="viewer-container mt-3">
+								<button onclick="prevVideo()" class="btn btn-primary mr-2">⏮ Sebelumnya</button>
+								<button onclick="nextVideo()" class="btn btn-primary mr-2">⏭ Selanjutnya</button>
+								<button onclick="randomVideo()" class="btn btn-primary">🎲 Acak</button>
+							</div>
+						</div>
+					</div>
+					<div class="row mb-5 pb-5">
+						<div class="col-xl-8 col-lg-7">
+							<!-- Video description -->
+							<div class="tm-video-description-box">
+								<h2 class="mb-5 tm-video-title">Requirement</h2>
+								<p class="mb-4">
+									Node.js required :<br>
+									1. Download and install Node.js from <a href="https://nodejs.org/" class="tm-text-link">nodejs.org</a><br>
+									2. Run "npm npm install -g http-server"<br>
+									3. then http-server
+								</p>
+								<h3 class="mb-4 tm-text-primary">Common Errors</h3>
+								<p class="mb-4">
+									ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host<br>
+									Artinya browser yang nutup koneksi secara paksa, bukan Python yang “crash duluan”.<br><br>
+
+									Pada http.server (Python built-in), ini sangat umum terjadi ketika:<br>
+									Browser:<br>
+									membatalkan request (tab ditutup / reload)<br>
+									seek video (lompat timeline)<br>
+									autoplay → ganti src cepat<br>
+									Server:<br>
+									mengirim file besar (mp4) tapi tidak mendukung range request dengan baik<br>
+								</p>
+
+							</div>							
+						</div>
+						<div class="col-xl-4 col-lg-5">
+							<!-- Share box -->
+							<div class="tm-bg-gray tm-share-box">
+								<h6 class="tm-share-box-title mb-4">Share this video</h6>
+								<div class="mb-5 d-flex">
+									<a href="video-page.html?random=1" class="position-absolute tm-img-overlay">
+									<a href="" class="tm-bg-white tm-share-button"><i class="fab fa-twitter"></i></a>
+									<a href="" class="tm-bg-white tm-share-button"><i class="fab fa-pinterest"></i></a>
+									<a href="" class="tm-bg-white tm-share-button"><i class="far fa-envelope"></i></a>
+								</div>
+								<p class="mb-4">Author: <a href="https://templatemo.com" class="tm-text-link">TemplateMo</a></p>
+								<a href="#" class="tm-bg-white px-5 mb-4 d-inline-block tm-text-primary tm-likes-box tm-liked">
+									<i class="fas fa-heart mr-3 tm-liked-icon"></i>
+									<i class="far fa-heart mr-3 tm-not-liked-icon"></i>
+									<span id="tm-likes-count">486 likes</span>
+								</a>
+								<div>
+									<button class="btn btn-primary p-0 tm-btn-animate tm-btn-download tm-icon-download"><span>Download Video</span></button>	
+								</div>								
+							</div>
+						</div>
+					</div>
+
+				</main>
+				
+			</div>
+		</div>
+	</div>
+
+	<script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script>
+    	// Global variables untuk video data
+    	let videosData = [];
+    	let currentIndex = 0;
+
+    	// Load videos dari JSON
+    	async function loadVideos() {
+    		try {
+			
+    			const response = await fetch('./videos.json');
+    			videosData = await response.json();
+    			return videosData;
+    		} catch (error) {
+    			console.error('Error loading videos:', error);
+    			return [];
+    		}
+    	}
+
+    	// Tampilkan video berdasarkan index
+    	function showVideo(index) {
+    		if (!videosData.length || index < 0 || index >= videosData.length) {
+    			return;
+    		}
+
+    		const video = document.getElementById("video-player");
+    		const source = document.getElementById("video-source");
+    		const videoData = videosData[index];
+
+    		source.src = videoData.path;
+    		video.load();
+    		video.play();
+    		currentIndex = index;
+
+    		// Update title jika ada
+    		const titleElement = document.querySelector('.tm-video-title');
+    		if (titleElement) {
+    			titleElement.textContent = videoData.filename;
+    		}
+    	}
+
+    	// Navigasi video
+    	function nextVideo() {
+    		if (videosData.length > 0) {
+    			currentIndex = (currentIndex + 1) % videosData.length;
+    			showVideo(currentIndex);
+    		}
+    	}
+
+    	function prevVideo() {
+    		if (videosData.length > 0) {
+    			currentIndex = (currentIndex - 1 + videosData.length) % videosData.length;
+    			showVideo(currentIndex);
+    		}
+    	}
+
+    	function randomVideo() {
+    		if (videosData.length > 0) {
+    			currentIndex = Math.floor(Math.random() * videosData.length);
+    			showVideo(currentIndex);
+    		}
+    	}
+
+    	// Initialize saat halaman dimuat
+    	document.addEventListener("DOMContentLoaded", async () => {
+    		await loadVideos();
+
+    		// Ambil parameter vid dari URL
+    		const urlParams = new URLSearchParams(window.location.search);
+    		const vidParam = urlParams.get("vid");
+    		const randomParam = urlParams.get("random");
+
+    		if (randomParam === "1") {
+    			randomVideo();
+    		} else if (vidParam !== null) {
+    			const vidIndex = parseInt(vidParam);
+    			if (!isNaN(vidIndex) && vidIndex >= 0 && vidIndex < videosData.length) {
+    				showVideo(vidIndex);
+    			} else {
+    				showVideo(0);
+    			}
+    		} else {
+    			showVideo(0);
+    		}
+    	});
+
+    	// Like button functionality
+    	$(document).ready(function() {
+    		$('.tm-likes-box').click(function(e) {
+    			e.preventDefault();
+    			$(this).toggleClass('tm-liked');
+
+    			if($(this).hasClass('tm-liked')) {
+    				$('#tm-likes-count').html('486 likes');
+    			} else {
+    				$('#tm-likes-count').html('485 likes');
+    			}
+    		});
+    	});
+    </script>
+
+</body>
+</html>
